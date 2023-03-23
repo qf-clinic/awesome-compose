@@ -2,24 +2,25 @@ pipeline {
     agent { label 'k8s-label' }
 
     stages {
-         stage('clone') {
+        stage('clone') {
             steps {
-                 checkout scm  
-                  echo "build"
+                    echo "clone repo"
+                    checkout scm  
+                 
             }
         }
         stage('Build') {
             steps {
                  dir('django') {
-                    echo "build"
+                    echo " Build docker images"
                     sh "docker build -t devopsjuly22017/django-web ."
                     sh "docker push devopsjuly22017/django-web:latest"
                  }
             }
         }
-         stage('deploy') {
+        stage('deploy') {
             steps {
-                  echo "deploy"
+                  echo "deploy django app  into k8s"
                   dir('django/k8s') {
                     sh "kubectl delete -f django.yml"
                     sh "kubectl apply -f django.yml"
