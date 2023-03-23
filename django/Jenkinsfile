@@ -6,11 +6,21 @@ pipeline {
     }
 
     stages {
+         stage('clone') {
+            steps {
+                 checkout scm  
+                  echo "build"
+            }
+        }
         stage('Build') {
             steps {
-                 checkout scm
-              
-                sh "mvn -Dmaven.test.failure.ignore=true clean package"
+                 
+                  echo "build"
+            }
+        }
+         stage('deploy') {
+            steps {
+                  echo "deploy"
             }
         }
     }
