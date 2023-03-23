@@ -10,14 +10,20 @@ pipeline {
         }
         stage('Build') {
             steps {
-                 
-                  echo "build"
+                 dir('django') {
+                    echo "build"
+                    sh "docker build -t devopsjuly22017/django-web ."
+                    sh "docker push devopsjuly22017/django-web:latest"
+                 }
             }
         }
          stage('deploy') {
             steps {
                   echo "deploy"
-                  sh "kubectl apply -f django/k8s/django.yml"
+                  dir('django/k8s') {
+                    sh "kubectl delete -f django.yml"
+                    sh "kubectl apply -f django.yml"
+                  }
             }
         }
     }

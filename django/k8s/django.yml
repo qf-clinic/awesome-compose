@@ -16,7 +16,7 @@ metadata:
 spec:
   containers:
   - name: django
-    image: devopsjuly22017/django:v1
+    image: devopsjuly22017/django-web:latest
     ports:
     - containerPort: 8000
 
