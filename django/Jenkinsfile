@@ -11,7 +11,7 @@ pipeline {
         }
         stage('Build') {
             steps {
-                 dir('django') {
+                 dir('django/app') {
                     echo " Build docker images"
                     sh "docker build -t devopsjuly22017/django-web ."
                     sh "docker push devopsjuly22017/django-web:latest"
