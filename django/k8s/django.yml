@@ -4,21 +4,49 @@ kind: Namespace
 metadata:
   name: dev
 ---
-#kubectl run d1 --image=devopsjuly22017/django-web --port=8000 -n dev
-apiVersion: v1
-kind: Pod
+# Deployment  #ReplicaSet #ReplicationController 
+apiVersion: apps/v1
+kind: Deployment 
 metadata:
-  name: d1
+  name: dr1
   labels:
     app: django
     env: dev
-  namespace: dev 
+  namespace: dev
 spec:
-  containers:
-  - name: django
-    image: devopsjuly22017/django-web:latest
-    ports:
-    - containerPort: 8000
+  replicas: 3
+  selector:
+    matchLabels:
+      app: django
+  template:
+    metadata:
+      name: d1
+      labels:
+        app: django
+        env: dev
+    spec:
+      containers:
+      - name: django
+        image: devopsjuly22017/django-web:latest
+        ports:
+        - containerPort: 8000
+
+
+#kubectl run d1 --image=devopsjuly22017/django-web --port=8000 -n dev
+# apiVersion: v1
+# kind: Pod
+# metadata:
+#   name: d1
+#   labels:
+#     app: django
+#     env: dev
+#   namespace: dev 
+# spec:
+#   containers:
+#   - name: django
+#     image: devopsjuly22017/django-web:latest
+#     ports:
+#     - containerPort: 8000
 
 #kubectl expose pod d1 --port=8000 --target-port=8000 --name=d1svc --type=NodePort -n dev
 ---
